@@ -9,12 +9,10 @@ import java.util.Map;
 
 public class FileReader {
 
-    public Profile getDataFromFile(File file) throws IOException {
-        BufferedReader inputStream = null;
+    public Profile getDataFromFile(File file) {
         Map<String, String> map = new HashMap<>();
 
-        try {
-            inputStream = new BufferedReader(new java.io.FileReader(file));
+        try (BufferedReader inputStream = new BufferedReader(new java.io.FileReader(file))) {
             String line;
             while ((line = inputStream.readLine()) != null) {
                 String[] k = line.split(": ");
@@ -24,10 +22,6 @@ public class FileReader {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
         }
         return new Profile(map.get("Name"), Integer.parseInt(map.get("Age")), map.get("Email"), Long.parseLong(map.get("Phone")));
     }
