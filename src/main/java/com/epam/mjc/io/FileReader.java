@@ -8,8 +8,6 @@ import java.util.Map;
 
 
 public class FileReader {
-    BufferedReader inputStream = null;
-
 
     public Profile getDataFromFile(File file) throws IOException {
         BufferedReader inputStream = null;
@@ -24,13 +22,13 @@ public class FileReader {
                 String value = k[1];
                 map.put(key, value);
             }
-
-
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             if (inputStream != null) {
                 inputStream.close();
             }
-            return new Profile(map.get("Name"), Integer.parseInt(map.get("Age")), map.get("Email"), Long.parseLong(map.get("Phone")));
         }
+        return new Profile(map.get("Name"), Integer.parseInt(map.get("Age")), map.get("Email"), Long.parseLong(map.get("Phone")));
     }
 }
